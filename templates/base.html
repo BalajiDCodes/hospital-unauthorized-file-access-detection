@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Hospital Unauthorized File Access Detection System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="{{ url_for('dashboard') }}" class="nav-brand">
+        <span>🏥 Hospital File Access Guard</span>
+        <span class="nav-brand-badge">Secured</span>
+      </a>
+
+      {% if session.get('user_id') %}
+      <ul class="nav-links">
+        <li>
+          <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('list_files') }}" class="{% if request.endpoint in ['list_files', 'view_file'] %}active{% endif %}">
+            Medical Records
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('security_logs') }}" class="{% if request.endpoint == 'security_logs' %}active{% endif %}">
+            Security Logs
+          </a>
+        </li>
+      </ul>
+
+      <div class="user-badge-group">
+        <span class="user-tag">
+          👤 {{ session.get('username') }} ({{ session.get('department') }})
+        </span>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+      </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Main Body Content -->
+  <main class="main-wrapper">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Hospital Unauthorized File Access Detection System &bull; College Mini Project &bull; Flask &amp; SQLite</p>
+  </footer>
+
+</body>
+</html>

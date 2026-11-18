@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Medical Records - Hospital Access Detection System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Synthetic Hospital Medical Records</h1>
+  <p class="page-subtitle">Department-governed storage in <code>sample_data/</code>. Click a file to test authorization.</p>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Available Hospital Records</h2>
+    <span style="font-size: 0.85rem; color: var(--text-muted);">
+      Your Clearance: <strong>{{ session.department }}</strong>
+    </span>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>File Identifier</th>
+          <th>Description</th>
+          <th>Record Department</th>
+          <th>Modality / Type</th>
+          <th>Your Permission</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for file in files %}
+        {% set has_access = (session.role == 'admin' or session.department == file.department or file.department == 'Administration') %}
+        <tr>
+          <td>
+            <strong>{{ file.filename }}</strong>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">{{ file.display_name }}</div>
+          </td>
+          <td>{{ file.description }}</td>
+          <td>
+            {% if file.department == 'Cardiology' %}
+              <span class="badge badge-cardio">Cardiology</span>
+            {% elif file.department == 'Radiology' %}
+              <span class="badge badge-radio">Radiology</span>
+            {% else %}
+              <span class="badge badge-admin">General Admin</span>
+            {% endif %}
+          </td>
+          <td>{{ file.file_type }}</td>
+          <td>
+            {% if has_access %}
+              <span class="badge badge-granted">Authorized</span>
+            {% else %}
+              <span class="badge badge-denied">Restricted</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ url_for('view_file', filename=file.filename) }}" 
+               class="btn btn-sm {% if has_access %}btn-primary{% else %}btn-outline{% endif %}">
+              View Record
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" style="background-color: #f8fafc; border-left: 4px solid var(--accent-teal);">
+  <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-navy); margin-bottom: 0.35rem;">
+    💡 Testing Instructions for Evaluation
+  </h3>
+  <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+    To verify unauthorized access detection: Click <strong>"View Record"</strong> on a file belonging to a different department (for example, while logged in as <code>cardio_doc</code>, click on <code>radio_scan_201_mri.txt</code>). The system will intercept the request, deny access, show a security violation alert, and append an entry to the Security Logs.
+  </p>
+</div>
+{% endblock %}

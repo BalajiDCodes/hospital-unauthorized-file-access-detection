@@ -1,0 +1,25 @@
+=======================================================
+HOSPITAL MEDICAL RECORD - CARDIOLOGY DEPARTMENT
+=======================================================
+Patient ID       : CARD-102
+Patient Name     : Maria Garcia (Synthetic Record)
+Age / Sex        : 61 / Female
+Department       : Cardiology
+Attending Doctor : Dr. S. Rao (Cardiology)
+Date of Exam     : 2026-11-12
+
+CLINICAL REPORT:
+Transthoracic Echocardiogram (TTE)
+Left Ventricular Ejection Fraction (LVEF): 58% (Normal)
+Left Atrium      : Mild enlargement (38 mm)
+Valvular Function: Trace mitral regurgitation, no aortic stenosis.
+Pericardium      : No pericardial effusion.
+
+DIAGNOSIS & NOTES:
+- Preserved left ventricular systolic function.
+- Blood pressure control recommended.
+- Continue prescribed ACE inhibitor therapy.
+
+CONFIDENTIALITY NOTICE:
+Authorized access only by Cardiology Department staff and Hospital Administration.
+=======================================================

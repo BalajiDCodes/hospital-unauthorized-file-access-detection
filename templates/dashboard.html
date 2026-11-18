@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Hospital Access Detection System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Hospital Security Dashboard</h1>
+  <p class="page-subtitle">Real-time surveillance of department file queries and unauthorized access violations.</p>
+</div>
+
+<!-- 4 Core Metric Cards as per specification -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-label">Total Users</div>
+    <div class="metric-value">{{ stats.total_users }}</div>
+    <div class="metric-hint">Registered clinical & admin personnel</div>
+  </div>
+
+  <div class="metric-card teal">
+    <div class="metric-label">Medical Files</div>
+    <div class="metric-value">{{ stats.total_files }}</div>
+    <div class="metric-hint">Synthetic records in sample-data store</div>
+  </div>
+
+  <div class="metric-card green">
+    <div class="metric-label">Authorized Attempts</div>
+    <div class="metric-value">{{ stats.authorized_attempts }}</div>
+    <div class="metric-hint">Department-compliant file queries</div>
+  </div>
+
+  <div class="metric-card red">
+    <div class="metric-label">Denied Attempts</div>
+    <div class="metric-value">{{ stats.denied_attempts }}</div>
+    <div class="metric-hint">Unauthorized cross-department attempts</div>
+  </div>
+</div>
+
+<!-- Active Session Profile & Access Rule Summary -->
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Current Session &amp; Access Policy</h2>
+    <span class="badge {% if session.department == 'Cardiology' %}badge-cardio{% elif session.department == 'Radiology' %}badge-radio{% else %}badge-admin{% endif %}">
+      {{ session.department }}
+    </span>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+    <div>
+      <p style="font-size: 0.95rem; margin-bottom: 0.35rem;">
+        Logged in as: <strong>{{ session.full_name }}</strong> (<code>{{ session.username }}</code>)
+      </p>
+      <p style="font-size: 0.88rem; color: var(--text-muted);">
+        {% if session.department == 'Administration' %}
+          <strong>Administrator Privilege:</strong> You hold full clearance to view files across all clinical departments and review system security logs.
+        {% elif session.department == 'Cardiology' %}
+          <strong>Cardiology Clearance:</strong> You are authorized to access Cardiology diagnostic records only (ECG, Echo). Access to Radiology files will be blocked and logged as a security violation.
+        {% elif session.department == 'Radiology' %}
+          <strong>Radiology Clearance:</strong> You are authorized to access Radiology scan records only (MRI, CT). Access to Cardiology files will be blocked and logged as a security violation.
+        {% endif %}
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="{{ url_for('list_files') }}" class="btn btn-primary">Browse Files</a>
+      <a href="{{ url_for('security_logs') }}" class="btn btn-outline">Audit Logs</a>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Security Activity Preview -->
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Recent Access Activity</h2>
+    <a href="{{ url_for('security_logs') }}" class="btn btn-sm btn-outline">View All Logs</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>User</th>
+          <th>User Dept</th>
+          <th>Requested File</th>
+          <th>Target Dept</th>
+          <th>Operation</th>
+          <th>Access Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if recent_logs %}
+          {% for log in recent_logs %}
+          <tr>
+            <td>{{ log.timestamp }}</td>
+            <td><strong>{{ log.username }}</strong></td>
+            <td>{{ log.user_department }}</td>
+            <td><code>{{ log.requested_file }}</code></td>
+            <td>{{ log.required_department }}</td>
+            <td>{{ log.operation }}</td>
+            <td>
+              {% if log.access_result == 'GRANTED' %}
+                <span class="badge badge-granted">✓ GRANTED</span>
+              {% else %}
+                <span class="badge badge-denied">✗ DENIED</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+              No file access events recorded yet. Try opening medical records to generate access logs.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

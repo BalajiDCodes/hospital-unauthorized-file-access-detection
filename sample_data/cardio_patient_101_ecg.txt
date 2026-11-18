@@ -1,0 +1,25 @@
+=======================================================
+HOSPITAL MEDICAL RECORD - CARDIOLOGY DEPARTMENT
+=======================================================
+Patient ID       : CARD-101
+Patient Name     : John Doe (Synthetic Record)
+Age / Sex        : 54 / Male
+Department       : Cardiology
+Attending Doctor : Dr. S. Rao (Cardiology)
+Date of Exam     : 2026-11-10
+
+CLINICAL REPORT:
+12-Lead Electrocardiogram (ECG) performed.
+Heart Rate       : 74 bpm (Sinus Rhythm)
+PR Interval      : 160 ms
+QRS Duration     : 90 ms
+QT / QTc         : 390 / 415 ms
+
+DIAGNOSIS & NOTES:
+- Normal sinus rhythm without acute ischemic changes.
+- Stable baseline compared with previous test.
+- Patient advised routine follow-up in 6 months.
+
+CONFIDENTIALITY NOTICE:
+Authorized access only by Cardiology Department staff and Hospital Administration.
+=======================================================

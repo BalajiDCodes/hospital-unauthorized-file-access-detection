@@ -1,0 +1,24 @@
+=======================================================
+HOSPITAL MEDICAL RECORD - RADIOLOGY DEPARTMENT
+=======================================================
+Patient ID       : RAD-202
+Patient Name     : Emily Watson (Synthetic Record)
+Age / Sex        : 35 / Female
+Department       : Radiology
+Imaging Modality : High-Resolution Chest Computed Tomography (HRCT)
+Radiologist      : Dr. K. Mehta (Radiology)
+Date of Scan     : 2026-11-15
+
+IMAGING FINDINGS:
+- Non-contrast spiral CT scan of the thorax.
+- Lung parenchyma demonstrates clear bilateral lung fields.
+- No consolidation, ground-glass opacities, or pleural effusion detected.
+- Mediastinal and hilar lymph nodes within normal size limits.
+- Cardiothoracic ratio is normal.
+
+IMPRESSION:
+- Normal chest CT scan. No acute cardiopulmonary disease.
+
+CONFIDENTIALITY NOTICE:
+Authorized access only by Radiology Department staff and Hospital Administration.
+=======================================================

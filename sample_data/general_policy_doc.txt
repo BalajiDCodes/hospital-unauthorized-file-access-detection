@@ -1,0 +1,26 @@
+=======================================================
+HOSPITAL DATA GOVERNANCE & ACCESS CONTROL POLICY
+=======================================================
+Document Code    : POL-2026-HOSP-01
+Classification   : Internal Hospital Administrative Policy
+Effective Date   : 2026-01-01
+Review Date      : 2026-12-31
+
+1. PURPOSE & SCOPE
+This policy defines the access authorization boundaries for electronic medical
+records (EMRs) across clinical departments, including Cardiology, Radiology,
+and Central Administration.
+
+2. ACCESS TIERS
+- Department Isolation: Medical practitioners may only query and view records
+  originating from their assigned clinical specialty.
+- Central Oversight: The Hospital Security & Compliance Administrator has
+  supervisory clearance to audit system activity, examine logs, and view records.
+- Violation Logging: Any attempt to query records outside of an authorized
+  department is classified as an Unauthorized Access Event and permanently
+  recorded in the security audit database.
+
+3. COMPLIANCE & PENALTIES
+Failure to observe patient data isolation boundaries incurs immediate audit review
+and potential credential revocation.
+=======================================================

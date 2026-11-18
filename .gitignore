@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# SQLite Database (optional to ignore instance, but keeping fresh on init)
+*.db
+*.sqlite3
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.swp

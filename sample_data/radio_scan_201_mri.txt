@@ -1,0 +1,24 @@
+=======================================================
+HOSPITAL MEDICAL RECORD - RADIOLOGY DEPARTMENT
+=======================================================
+Patient ID       : RAD-201
+Patient Name     : Robert Chen (Synthetic Record)
+Age / Sex        : 42 / Male
+Department       : Radiology
+Imaging Modality : Brain MRI without Contrast
+Radiologist      : Dr. K. Mehta (Radiology)
+Date of Scan     : 2026-11-14
+
+IMAGING FINDINGS:
+- Axial, sagittal, and coronal T1, T2, and FLAIR sequences obtained.
+- Ventricular system and basilar cisterns are within normal limits for age.
+- No evidence of acute intra-axial hemorrhage or mass effect.
+- No midline shift observed.
+- Minimal nonspecific white matter hyperintensities in subcortical frontoparietal regions.
+
+IMPRESSION:
+- Unremarkable brain MRI scan without evidence of acute infarction or neoplasm.
+
+CONFIDENTIALITY NOTICE:
+Authorized access only by Radiology Department staff and Hospital Administration.
+=======================================================

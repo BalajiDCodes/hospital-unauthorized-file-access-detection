@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}View: {{ file_record.filename }} - Hospital Access System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <div>
+      <h1 class="page-title">Access Granted: {{ file_record.filename }}</h1>
+      <p class="page-subtitle">{{ file_record.display_name }} &bull; Department: {{ file_record.department }}</p>
+    </div>
+    <div>
+      <a href="{{ url_for('list_files') }}" class="btn btn-outline">&larr; Back to Records</a>
+      <a href="{{ url_for('download_file', filename=file_record.filename) }}" class="btn btn-primary">Download File</a>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="border-top: 4px solid var(--success-color);">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 0.88rem;">
+    <div>
+      <span class="badge badge-granted">✓ Access Authorized</span>
+      <span style="color: var(--text-muted); margin-left: 0.5rem;">Verified Department Match</span>
+    </div>
+    <div style="color: var(--text-muted);">
+      Viewing as: <strong>{{ session.username }}</strong> ({{ session.department }})
+    </div>
+  </div>
+
+  <div class="file-viewer-box">{{ content }}</div>
+</div>
+{% endblock %}

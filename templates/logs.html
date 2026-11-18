@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Security Audit Logs - Hospital Access Detection System{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+    <div>
+      <h1 class="page-title">Security Audit Logs</h1>
+      <p class="page-subtitle">Historical audit trail of all medical record access requests and violation attempts.</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div style="display: flex; gap: 0.5rem;">
+      <a href="{{ url_for('security_logs') }}" 
+         class="btn btn-sm {% if not current_filter %}btn-navy{% else %}btn-outline{% endif %}">
+        All Logs
+      </a>
+      <a href="{{ url_for('security_logs', filter='GRANTED') }}" 
+         class="btn btn-sm {% if current_filter == 'GRANTED' %}btn-primary{% else %}btn-outline{% endif %}">
+        ✓ Authorized Only
+      </a>
+      <a href="{{ url_for('security_logs', filter='DENIED') }}" 
+         class="btn btn-sm {% if current_filter == 'DENIED' %}btn-danger{% else %}btn-outline{% endif %}">
+        ✗ Denied / Violations
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">
+      Log Records 
+      <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">
+        ({{ logs|length }} entries displayed)
+      </span>
+    </h2>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Log ID</th>
+          <th>Timestamp</th>
+          <th>Username</th>
+          <th>User Dept</th>
+          <th>Requested File</th>
+          <th>Target Dept</th>
+          <th>Operation</th>
+          <th>Result</th>
+          <th>Security Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if logs %}
+          {% for log in logs %}
+          <tr style="{% if log.access_result == 'DENIED' %}background-color: #fff5f5;{% endif %}">
+            <td>#{{ log.id }}</td>
+            <td style="white-space: nowrap;">{{ log.timestamp }}</td>
+            <td><strong>{{ log.username }}</strong></td>
+            <td>
+              <span class="badge {% if log.user_department == 'Cardiology' %}badge-cardio{% elif log.user_department == 'Radiology' %}badge-radio{% else %}badge-admin{% endif %}">
+                {{ log.user_department }}
+              </span>
+            </td>
+            <td><code>{{ log.requested_file }}</code></td>
+            <td>
+              <span class="badge {% if log.required_department == 'Cardiology' %}badge-cardio{% elif log.required_department == 'Radiology' %}badge-radio{% else %}badge-admin{% endif %}">
+                {{ log.required_department }}
+              </span>
+            </td>
+            <td><span style="font-weight: 600;">{{ log.operation }}</span></td>
+            <td>
+              {% if log.access_result == 'GRANTED' %}
+                <span class="badge badge-granted">GRANTED</span>
+              {% else %}
+                <span class="badge badge-denied">DENIED</span>
+              {% endif %}
+            </td>
+            <td style="font-size: 0.82rem; color: {% if log.access_result == 'DENIED' %}#b91c1c{% else %}#15803d{% endif %};">
+              {{ log.reason }}
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+              No log entries match the selected filter.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

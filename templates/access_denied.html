@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Access Denied - Security Alert{% endblock %}
+
+{% block content %}
+<div class="alert-banner">
+  <div class="alert-banner-title">⚠️ SECURITY ALERT: UNAUTHORIZED FILE ACCESS DETECTED</div>
+  <p class="alert-banner-text">
+    Your access request was strictly blocked by the Hospital Access Enforcement Module. An incident log has been generated and dispatched to the security audit database.
+  </p>
+</div>
+
+<div class="card" style="border-top: 4px solid var(--danger-color);">
+  <div class="card-header">
+    <h2 class="card-title">Incident Diagnostic Summary</h2>
+    <span class="badge badge-denied">VIOLATION DETECTED</span>
+  </div>
+
+  <table class="data-table" style="max-width: 700px; margin-bottom: 1.5rem;">
+    <tr>
+      <th style="width: 240px;">Incident Timestamp</th>
+      <td>{{ timestamp }}</td>
+    </tr>
+    <tr>
+      <th>Authenticated User</th>
+      <td><strong>{{ session.username }}</strong> ({{ session.full_name }})</td>
+    </tr>
+    <tr>
+      <th>User Department</th>
+      <td>
+        <span class="badge {% if session.department == 'Cardiology' %}badge-cardio{% elif session.department == 'Radiology' %}badge-radio{% else %}badge-admin{% endif %}">
+          {{ session.department }}
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Target File</th>
+      <td><code>{{ filename }}</code></td>
+    </tr>
+    <tr>
+      <th>File Required Department</th>
+      <td>
+        <span class="badge {% if target_dept == 'Cardiology' %}badge-cardio{% elif target_dept == 'Radiology' %}badge-radio{% else %}badge-admin{% endif %}">
+          {{ target_dept }}
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <th>Enforcement Reason</th>
+      <td style="color: var(--danger-color); font-weight: 600;">
+        {{ reason }}
+      </td>
+    </tr>
+    <tr>
+      <th>Audit Status</th>
+      <td><span class="badge badge-denied">Logged to SQLite Security Table</span></td>
+    </tr>
+  </table>
+
+  <div style="display: flex; gap: 0.75rem;">
+    <a href="{{ url_for('list_files') }}" class="btn btn-navy">&larr; Return to Allowed Files</a>
+    <a href="{{ url_for('security_logs') }}" class="btn btn-outline">Check Security Logs</a>
+  </div>
+</div>
+{% endblock %}
